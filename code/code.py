@@ -11,13 +11,17 @@ led.direction = digitalio.Direction.OUTPUT
 led.value = True
 
 # Init switchs Ctrl
-pin_sw1 = digitalio.DigitalInOut(board.GP28)
-pin_sw1.direction = digitalio.Direction.INPUT
-pin_sw1.pull = digitalio.Pull.UP
+pin_sw_ctrl = digitalio.DigitalInOut(board.GP28)
+pin_sw_ctrl.direction = digitalio.Direction.INPUT
+pin_sw_ctrl.pull = digitalio.Pull.UP
 # Init switchs Shift
-pin_sw2 = digitalio.DigitalInOut(board.GP27)
-pin_sw2.direction = digitalio.Direction.INPUT
-pin_sw2.pull = digitalio.Pull.UP
+pin_sw_shift = digitalio.DigitalInOut(board.GP27)
+pin_sw_shift.direction = digitalio.Direction.INPUT
+pin_sw_shift.pull = digitalio.Pull.UP
+# Init switchs Alt
+pin_sw_alt = digitalio.DigitalInOut(board.GP26)
+pin_sw_alt.direction = digitalio.Direction.INPUT
+pin_sw_alt.pull = digitalio.Pull.UP
 
 
 # GPIO pin configuration
@@ -57,8 +61,9 @@ for i in range(3):
 while True:
 
     # Update Ctrl and Shift swiches (Invert for pull-up resistor)
-    pin_sw1_enabled = not pin_sw1.value
-    pin_sw2_enabled = not pin_sw2.value
+    pin_sw_ctrl_on = not pin_sw_ctrl.value
+    pin_sw_shift_on = not pin_sw_shift.value
+    pin_sw_alt_on = not pin_sw_alt.value
 
     for i in range(len(pins)):
         # Invert for pull-up resistor
@@ -70,343 +75,500 @@ while True:
             if current_state:  # The pin is currently enabled (switch pushed)
 
                 if pins[i] == board.GP0:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F13)
                         print("Press F13")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F13)
-                        print("Press Ctrl+F13")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F13)
-                        print("Press Shift+F13")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F13)
-                        print("Press Ctrl+Shift+F13")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F13')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP1:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F14)
                         print("Press F14")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F14)
-                        print("Press Ctrl+F14")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F14)
-                        print("Press Shift+F14")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F14)
-                        print("Press Ctrl+Shift+F14")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F14')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP2:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F15)
                         print("Press F15")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F15)
-                        print("Press Ctrl+F15")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F15)
-                        print("Press Shift+F15")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F15)
-                        print("Press Ctrl+Shift+F15")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F15')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP3:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F16)
                         print("Press F16")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F16)
-                        print("Press Ctrl+F16")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F16)
-                        print("Press Shift+F16")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F16)
-                        print("Press Ctrl+Shift+F16")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F16')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP4:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F17)
                         print("Press F17")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F17)
-                        print("Press Ctrl+F17")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F17)
-                        print("Press Shift+F17")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F17)
-                        print("Press Ctrl+Shift+F17")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F17')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP5:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F18)
                         print("Press F18")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F18)
-                        print("Press Ctrl+F18")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F18)
-                        print("Press Shift+F18")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F18)
-                        print("Press Ctrl+Shift+F18")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F18')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP6:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F19)
                         print("Press F19")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F19)
-                        print("Press Ctrl+F19")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F19)
-                        print("Press Shift+F19")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F19)
-                        print("Press Ctrl+Shift+F19")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F19')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP7:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F20)
                         print("Press F20")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F20)
-                        print("Press Ctrl+F20")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F20)
-                        print("Press Shift+F20")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F20)
-                        print("Press Ctrl+Shift+F20")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F20')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP8:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F21)
                         print("Press F21")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F21)
-                        print("Press Ctrl+F21")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F21)
-                        print("Press Shift+F21")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F21)
-                        print("Press Ctrl+Shift+F21")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F21')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP9:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F22)
                         print("Press F22")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F22)
-                        print("Press Ctrl+F22")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F22)
-                        print("Press Shift+F22")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F22)
-                        print("Press Ctrl+Shift+F22")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F22')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP10:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F23)
                         print("Press F23")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F23)
-                        print("Press Ctrl+F23")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F23)
-                        print("Press Shift+F23")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F23)
-                        print("Press Ctrl+Shift+F23")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F23')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
 
                 elif pins[i] == board.GP11:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.press(Keycode.F24)
                         print("Press F24")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.send(Keycode.CONTROL, Keycode.F24)
-                        print("Press Ctrl+F24")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.send(Keycode.SHIFT, Keycode.F24)
-                        print("Press Shift+F24")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.send(Keycode.CONTROL, Keycode.SHIFT, Keycode.F24)
-                        print("Press Ctrl+Shift+F24")
+                    else:
+                        keys_arr = []
+                        str_keys_arr = []
+                        if pin_sw_ctrl_on:  # Ctrl ON
+                            keys_arr.append(Keycode.CONTROL)
+                            str_keys_arr.append('Ctrl')
+                        if pin_sw_alt_on:  # ALT ON
+                            keys_arr.append(Keycode.ALT)
+                            str_keys_arr.append('Alt')
+                        if pin_sw_shift_on:  # Shift ON
+                            keys_arr.append(Keycode.SHIFT)
+                            str_keys_arr.append('Shift')
+                        str_keys_arr.append('F24')
+                        print('Send '+'+'.join(str_keys_arr))
+                        keyboard.send(*keys_arr)
                 # Add other keys here
 
             else:  # The pin is currently disabled (switch released)
 
                 if pins[i] == board.GP0:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F13)
                         print("Release F13")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F13")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F13")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F13")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F13')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP1:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F14)
                         print("Release F14")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F14")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F14")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F14")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F14')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP2:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F15)
                         print("Release F15")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F15")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F15")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F15")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F15')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP3:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F16)
                         print("Release F16")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F16")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F16")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F16")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F16')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP4:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F17)
                         print("Release F17")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F17")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F17")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F17")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F17')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP5:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F18)
                         print("Release F18")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F18")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F18")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F18")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F18')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP6:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F19)
                         print("Release F19")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F19")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F19")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F19")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F19')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP7:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F20)
                         print("Release F20")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F20")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F20")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F20")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F20')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP8:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F21)
                         print("Release F21")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F21")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F21")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F21")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F21')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP9:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F22)
                         print("Release F22")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F22")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F22")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F22")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F22')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP10:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F23)
                         print("Release F23")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F23")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F23")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F23")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F23')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 elif pins[i] == board.GP11:
-                    if not pin_sw1_enabled and not pin_sw2_enabled:  # All switch OFF
+                    if not (pin_sw_ctrl_on or pin_sw_shift_on or pin_sw_alt_on):
                         keyboard.release(Keycode.F24)
                         print("Release F24")
-                    elif pin_sw1_enabled and not pin_sw2_enabled:  # Ctrl ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+F24")
-                    elif not pin_sw1_enabled and pin_sw2_enabled:  # Shift ON
-                        keyboard.release_all()
-                        print("Release all Shift+F24")
-                    elif pin_sw1_enabled and pin_sw2_enabled:  # Ctrl and Shift ON
-                        keyboard.release_all()
-                        print("Release all Ctrl+Shift+F24")
+                    # else:
+                    #     keys_arr = []
+                    #     str_keys_arr = ['Release ']
+                    #     if pin_sw_ctrl_on:  # Ctrl ON
+                    #         keys_arr.append(Keycode.CONTROL)
+                    #         str_keys_arr.append('Ctrl')
+                    #     if pin_sw_alt_on:  # ALT ON
+                    #         keys_arr.append(Keycode.ALT)
+                    #         str_keys_arr.append('Alt')
+                    #     if pin_sw_shift_on:  # Shift ON
+                    #         keys_arr.append(Keycode.SHIFT)
+                    #         str_keys_arr.append('Shift')
+                    #     str_keys_arr.append('F24')
+                    #     print('+'.join(str_keys_arr))
+                    #     keyboard.release(*keys_arr)
+                    #     # keyboard.release_all()
 
                 # Add other keys here
             #  if end

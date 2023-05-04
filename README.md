@@ -1,47 +1,66 @@
 # Pico Deck
+Pico Deck is a Raspberry Pi Pico-based USB macro keyboard project.
 
-## Introduction
+With the help of CircuitPython and Adafruit's libraries, you can create your own custom keyboard with an anti-ghosting system that can handle up to 12 physical buttons and 3 physical switches to toggle 8 different profiles.
 
-Use a Raspberry pi Pico to make your own usb macro keyboard.
-
-Use CircuitPython and adafruit's libraries.
-
-## Feature
-- Anti-ghosting
+## Features
+- Anti-ghosting system
 - Use F13 to F24 virtual keyboard keys
 - Up to 12 physical buttons
-- Two physical switches (on/off) to toggle 4 profils
+- 3 physical switches (on/off) to toggle 8 different profiles
 
-### Informations
-#### About profils
-- F# : Instruction press send when the button is press and release when the button is release (implement anti-ghosting)
-- Ctrl+F# : Instruction press+release send when the buton is press. When button is release send release all keys
-- Shift+F# : Instruction press+release send when the buton is press. When button is release send release all keys
-- Ctrl+Shift+F# : Instruction press+release send when the buton is press. When button is release send release all keys
+### Simple profiles
+When a button is pressed, instruction `press` and `release` are sent to the computer for each button individually
 
-## Install on your Pico
+You can press multiple buttons at the same time with anti-ghosting
 
-- Clone or download this repostory.
-#### Flash CircuitPython `firmware`
-- On your Pico, press BOOTSEL button while plugin to your computer via USB
-- Drag and drop the [latest CircuitPython](https://circuitpython.org/downloads) firmware file (.uf2) on your pico storage, it will reboot.
-#### Install `code`
-- Plug your Pico to your computer (do not press BOOTSEL)
-- Drag and drop the new `code.py` on your Pico.
-- Drag and drop the library folder `lib` on your Pico.
+### Profiles with macro combination
+Instruction `press` and `release` are sent to the computer only when you push the button
+You can combine Ctrl, Alt, Shift and F# (in this order) by toggling the switches:
+- Ctrl+F#
+- Ctrl+Alt+F#
+- Ctrl+Alt+Shift+F#
+- Ctrl+Shift+F#
+- Alt+F#
+- Alt+Shift+F#
+- Shift+F#
 
-## Wiring
-- GP0 --- `F13` Push button --- GND
-- GP1 --- `F14` Push button --- GND
-- GP2 --- `F15` Push button --- GND
-- GP3 --- `F16` Push button --- GND
-- GP4 --- `F17` Push button --- GND
-- GP5 --- `F18` Push button --- GND
-- GP6 --- `F19` Push button --- GND
-- GP7 --- `F20` Push button --- GND
-- GP8 --- `F21` Push button --- GND
-- GP9 --- `F22` Push button --- GND
-- GP10 --- `F23` Push button --- GND
-- GP11 --- `F24` Push button --- GND
-- GP28 --- `Ctrl` Switch --- GND
-- GP27 --- `Shift` Switch --- GND
+## Installation
+### Flash CircuitPython firmware
+1. Clone or download this repository.
+2. On your Pico, press the BOOTSEL button while plugging it into your computer via USB.
+3. Download the [latest CircuitPython firmware](https://circuitpython.org/downloads) file (.uf2).
+4. Drag and drop the firmware file on your Pico storage. The Pico will reboot.
+
+### Install code
+1. Plug your Pico into your computer (do not press BOOTSEL).
+2. Go to the `code` folder.
+3. Drag and drop the `code.py` and `lib` folder on your Pico.
+
+### Wiring
+- GP0 <-----> F13 Push button <-----> GND
+- GP1 <-----> F14 Push button <-----> GND
+- GP2 <-----> F15 Push button <-----> GND
+- GP3 <-----> F16 Push button <-----> GND
+- GP4 <-----> F17 Push button <-----> GND
+- GP5 <-----> F18 Push button <-----> GND
+- GP6 <-----> F19 Push button <-----> GND
+- GP7 <-----> F20 Push button <-----> GND
+- GP8 <-----> F21 Push button <-----> GND
+- GP9 <-----> F22 Push button <-----> GND
+- GP10 <-----> F23 Push button <-----> GND
+- GP11 <-----> F24 Push button <-----> GND
+- GP28 <-----> Ctrl Switch <-----> GND
+- GP27 <-----> Shift Switch <-----> GND
+- GP26 <-----> Alt Switch <-----> GND
+
+### Usage
+Once you have installed the code and connected the buttons, switches, and Pico as described above, you can start using your macro keyboard.
+
+To use the simple profiles, just press the desired button(s), and the corresponding key(s) will be sent to the computer.
+
+To use the profiles with macro combination, toggle the desired switches and then press the button(s).
+
+The corresponding key(s) and macro(s) will be sent to the computer.
+
+Enjoy your custom macro keyboard!
