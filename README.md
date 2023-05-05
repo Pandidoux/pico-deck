@@ -54,6 +54,8 @@ You can combine Ctrl, Alt, Shift and F# (in this order) by toggling the switches
 - GP27 <-----> Shift Switch <-----> GND
 - GP26 <-----> Alt Switch <-----> GND
 
+![Wiring Schema](./wiring.png)
+
 ### Usage
 Once you have installed the code and connected the buttons, switches, and Pico as described above, you can start using your macro keyboard.
 
