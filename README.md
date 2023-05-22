@@ -1,5 +1,5 @@
 # Pico Deck
-Pico Deck is a Raspberry Pi Pico-based USB macro keyboard project.
+Pico Deck is a Raspberry Pi Pico based USB macro keyboard project.
 
 With the help of CircuitPython and Adafruit's libraries, you can create your own custom keyboard with an anti-ghosting system that can handle up to 12 physical buttons and 3 physical switches to toggle 8 different profiles.
 
@@ -26,6 +26,7 @@ You can combine Ctrl, Alt, Shift and F# (in this order) by toggling the switches
 - Shift+F#
 
 ## Installation
+
 ### Flash CircuitPython firmware
 1. Clone or download this repository.
 2. On your Pico, press the BOOTSEL button while plugging it into your computer via USB.
