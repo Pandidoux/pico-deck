@@ -10,9 +10,6 @@ import pwmio
 # Set polling rate (seconds)
 polling_rate = 0.01
 
-# Backlight update rate (seconds)
-backlight_update_rate = 0.1
-
 # Enable / Disable serial console print
 debug = True
 
@@ -22,32 +19,18 @@ onboard_led.direction = digitalio.Direction.OUTPUT
 onboard_led.value = True
 
 # Init switchs Ctrl
-# pin_sw_ctrl = digitalio.DigitalInOut(board.GP28)
 pin_sw_ctrl = digitalio.DigitalInOut(board.GP20)
 pin_sw_ctrl.direction = digitalio.Direction.INPUT
 pin_sw_ctrl.pull = digitalio.Pull.UP
 # Init switchs Shift
-# pin_sw_shift = digitalio.DigitalInOut(board.GP27)
 pin_sw_shift = digitalio.DigitalInOut(board.GP21)
 pin_sw_shift.direction = digitalio.Direction.INPUT
 pin_sw_shift.pull = digitalio.Pull.UP
 # Init switchs Alt
-# pin_sw_alt = digitalio.DigitalInOut(board.GP26)
 pin_sw_alt = digitalio.DigitalInOut(board.GP22)
 pin_sw_alt.direction = digitalio.Direction.INPUT
 pin_sw_alt.pull = digitalio.Pull.UP
 
-
-# Backlight rate counter
-backlight_timer = 0
-# Variable resistor for backlight ajustment
-backlight_ajuster = analogio.AnalogIn(board.GP28)
-# Backlight pins
-backlight_pins = [board.GP18]
-backlight_LEDs = []
-for backlight_pin in backlight_pins:
-    led = pwmio.PWMOut(backlight_pin, frequency=5000, duty_cycle=0)
-    backlight_LEDs.append(led)
 
 # GPIO pin configuration
 button_pins = [
@@ -330,20 +313,6 @@ while True:
 
         #  if end
     #  for end
-
-
-    # Backlight brightness
-    if backlight_timer > backlight_update_rate:
-        # Read the value from the variable resistor
-        percentage = int(backlight_ajuster.value / 65535 * 100)
-        # Update the LED brightness based on the percentage
-        for i in range(len(backlight_LEDs)):
-            backlight_LEDs[i].duty_cycle = int(percentage / 100 * 65535)  # Set new LED PWM
-        if debug:
-            print(str(backlight_ajuster.value) + ' ' + str(percentage) + '% ' + 'LED: ' + str(led.duty_cycle))
-        backlight_timer = 0  # Reset timer
-    else:
-        backlight_timer += polling_rate  # Increment counter
 
 
     if onboard_led.value:  # Onboard LED OFF
