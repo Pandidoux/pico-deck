@@ -66,8 +66,6 @@ You can now edit the files in your pico storage.
 - GP22 <-----> Alt Switch <-----> GND
 - 3v3 <-----> 40-100ohm resistor <-----> Variable resistor <-----> [+] Backlight LEDs [-] <-----> Switch On/Off <-----> GND
 
-![Wiring Schema](./wiring.png)
-
 ### Usage
 Once you have installed the code and connected the buttons, switches, and Pico as described above, you can start using your macro keyboard.
 
