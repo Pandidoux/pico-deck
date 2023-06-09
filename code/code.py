@@ -86,17 +86,17 @@ def send_macro(ctrl, alt, shift, virtualkey):
     keys_arr = []
     str_keys_arr = []
     if ctrl:  # Ctrl ON
-        keys_arr.append(Keycode.CONTROL)
+        keys_arr.append(Keycode.LEFT_CONTROL)
         if debug:
-            str_keys_arr.append('CONTROL')
+            str_keys_arr.append('LEFT_CONTROL')
     if alt:  # ALT ON
-        keys_arr.append(Keycode.ALT)
+        keys_arr.append(Keycode.LEFT_ALT)
         if debug:
-            str_keys_arr.append('ALT')
+            str_keys_arr.append('LEFT_ALT')
     if shift:  # Shift ON
-        keys_arr.append(Keycode.SHIFT)
+        keys_arr.append(Keycode.LEFT_SHIFT)
         if debug:
-            str_keys_arr.append('SHIFT')
+            str_keys_arr.append('LEFT_SHIFT')
     keys_arr.append(virtualkey)
     if debug:
         str_keys_arr.append(keycode_to_text(virtualkey))
